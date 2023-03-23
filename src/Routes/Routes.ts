@@ -7,5 +7,12 @@ routes.post(
   '/cars',
   (req, res, next) => new CarController(req, res, next).registerNewCar(),
 );
+routes.get(
+  '/cars',
+  (req, res, next) => new CarController(req, res, next).getAllCars(),
+); routes.get(
+  '/cars/:id',
+  (req, res, next) => new CarController(req, res, next).getCarById(),
+);
 
 export default routes;
