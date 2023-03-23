@@ -36,6 +36,7 @@ export default class CarODM {
 
   async getCarById(id: string): Promise<ICar | null> {
     const car = await this.model.findById(id);
+    
     return car;
   }
 }
