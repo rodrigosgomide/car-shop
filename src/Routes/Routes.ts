@@ -10,9 +10,15 @@ routes.post(
 routes.get(
   '/cars',
   (req, res, next) => new CarController(req, res, next).getAllCars(),
-); routes.get(
+); 
+routes.get(
   '/cars/:id',
   (req, res, next) => new CarController(req, res, next).getCarById(),
+);
+
+routes.put(
+  '/cars/:id',
+  (req, res, next) => new CarController(req, res, next).updateCarById(),
 );
 
 export default routes;

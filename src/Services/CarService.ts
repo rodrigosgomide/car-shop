@@ -24,4 +24,12 @@ export default class CarService {
     if (!car) throw new CustomError(404, 'Car not found');
     return new Car(car);
   }
+
+  async updateCarById(id: string, update: ICar): Promise<Car> {
+    const isValid = mongoose.ObjectId.isValid(id);
+    if (!isValid) throw new CustomError(422, 'Invalid mongo id');
+    const car = await this.carODM.updateCarById(id, update);
+    if (!car) throw new CustomError(404, 'Car not found');
+    return new Car(car);
+  }
 }
