@@ -1,34 +1,34 @@
 import { NextFunction, Request, Response } from 'express';
-import ICar from '../Interfaces/ICar';
-import CarService from '../Services/CarService';
+import IMotorcycle from '../Interfaces/IMotorcycle';
+import MotorcycleService from '../Services/MotorcycleService';
 
-export default class CarController {
+export default class MotorcycleController {
   private req: Request;
   private res: Response;
   private next: NextFunction;
-  private service: CarService;
+  private service: MotorcycleService;
   
   constructor(req: Request, res: Response, next: NextFunction) {
     this.req = req;
     this.res = res;
     this.next = next;
-    this.service = new CarService();
+    this.service = new MotorcycleService();
   }
 
   async register() {
-    const car: ICar = {
+    const motorcycle: IMotorcycle = {
       model: this.req.body.model,
       year: this.req.body.year,
       color: this.req.body.color,
       status: this.req.body.status || false,
       buyValue: this.req.body.buyValue,
-      doorsQty: this.req.body.doorsQty,
-      seatsQty: this.req.body.seatsQty,
+      category: this.req.body.category,
+      engineCapacity: this.req.body.engineCapacity,
     };
     
     try {
-      const newCar = await this.service.register(car);
-      return this.res.status(201).json(newCar);
+      const newMotorcycle = await this.service.register(motorcycle);
+      return this.res.status(201).json(newMotorcycle);
     } catch (error) {
       this.next(error);
     }
@@ -36,8 +36,8 @@ export default class CarController {
 
   async getAll() {
     try {
-      const cars = await this.service.getAll();
-      return this.res.status(200).json(cars);
+      const motorcycles = await this.service.getAll();
+      return this.res.status(200).json(motorcycles);
     } catch (error) {
       this.next(error);
     }
@@ -46,8 +46,8 @@ export default class CarController {
   async getById() {
     const { id } = this.req.params;
     try {
-      const cars = await this.service.getById(id);
-      return this.res.status(200).json(cars);
+      const motorcycles = await this.service.getById(id);
+      return this.res.status(200).json(motorcycles);
     } catch (error) {
       this.next(error);
     }
@@ -55,14 +55,14 @@ export default class CarController {
 
   async updateById() {
     const { id } = this.req.params;
-    const update: ICar = {
+    const update: IMotorcycle = {
       model: this.req.body.model,
       year: this.req.body.year,
       color: this.req.body.color,
       status: this.req.body.status || false,
       buyValue: this.req.body.buyValue,
-      doorsQty: this.req.body.doorsQty,
-      seatsQty: this.req.body.seatsQty,
+      category: this.req.body.category,
+      engineCapacity: this.req.body.engineCapacity,
     };
     try {
       const car = await this.service.updateById(id, update);

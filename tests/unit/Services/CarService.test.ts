@@ -14,7 +14,7 @@ describe('CarODM', function () {
   it('Cria um novo carro', async function () {
     sinon.stub(Model, 'create').resolves(car);
   
-    const result = await carService.registerNewCar(newCarInput);
+    const result = await carService.register(newCarInput);
   
     expect(result).to.deep.equal(car);
   });
@@ -22,7 +22,7 @@ describe('CarODM', function () {
   it('Lista todos os carros cadastrados', async function () {
     sinon.stub(Model, 'find').resolves([car]);
       
-    const result = await carService.getAllCars();
+    const result = await carService.getAll();
   
     expect(result).to.deep.equal(result);
   });
@@ -30,7 +30,7 @@ describe('CarODM', function () {
   it('Lista um carro de acordo com seu id', async function () {
     sinon.stub(Model, 'findById').resolves(car);
       
-    const result = await carService.getCarById(validId);
+    const result = await carService.getById(validId);
   
     expect(result).to.deep.equal(result);
   });
@@ -39,7 +39,7 @@ describe('CarODM', function () {
     sinon.stub(Model, 'findById').resolves({});
       
     try {
-      await carService.getCarById(invalidId);
+      await carService.getById(invalidId);
     } catch (error) {
       expect((error as CustomError).message).to.be.equal('Invalid mongo id');
       expect((error as CustomError).status).to.be.equal(422);
@@ -50,7 +50,7 @@ describe('CarODM', function () {
     sinon.stub(Model, 'findById').resolves(null);
       
     try {
-      await carService.getCarById(validId);
+      await carService.getById(validId);
     } catch (error) {
       expect((error as CustomError).message).to.be.equal('Car not found');
       expect((error as CustomError).status).to.be.equal(404);
