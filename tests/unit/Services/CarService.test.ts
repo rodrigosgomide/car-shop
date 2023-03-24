@@ -3,9 +3,16 @@ import { Model } from 'mongoose';
 import sinon from 'sinon';
 import CarService from '../../../src/Services/CarService';
 import CustomError from '../../../src/Utils/CustomError';
-import { car, invalidId, newCarInput, validId } from '../../mocks/mocks';
+import { 
+  car, 
+  invalidId, 
+  newCarInput, 
+  updateCarInput, 
+  updatedCar, 
+  validId, 
+} from '../../mocks/mocks';
 
-describe('CarODM', function () {
+describe('CarService', function () {
   const carService = new CarService();
   afterEach(function () {
     sinon.restore();
@@ -55,5 +62,13 @@ describe('CarODM', function () {
       expect((error as CustomError).message).to.be.equal('Car not found');
       expect((error as CustomError).status).to.be.equal(404);
     }
+  });
+
+  it('Faz o update de um carro de acordo com seu id', async function () {
+    sinon.stub(Model, 'findByIdAndUpdate').resolves(updatedCar);
+      
+    const result = await carService.updateById(validId, updateCarInput);
+  
+    expect(result).to.deep.equal(result);
   });
 });
